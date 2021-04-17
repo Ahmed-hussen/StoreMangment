@@ -1,0 +1,230 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="CompanyModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Customer">
+    <Key>
+      <PropertyRef Name="IdCustomers" />
+    </Key>
+    <Property Name="IdCustomers" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="HomeNumebr" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Telephone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Website" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Fax" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="WithDraws" Relationship="Self.FK_WithDraw_Customers" FromRole="Customers" ToRole="WithDraw" />
+  </EntityType>
+  <EntityType Name="Item">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="EXP" Type="Int32" />
+    <Property Name="ProductionDate" Type="DateTime" Precision="0" />
+    <Property Name="Quantity" Type="Int32" />
+    <Property Name="Unit" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="WareHouseItems" Relationship="Self.FK_WareHouseItems_Items" FromRole="Items" ToRole="WareHouseItems" />
+  </EntityType>
+  <EntityType Name="Supplier">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="HomeNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Telephone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Website" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Fax" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="WareHouseSuppliers" Relationship="Self.FK_WareHouseSupplier_Suppliers" FromRole="Suppliers" ToRole="WareHouseSupplier" />
+    <NavigationProperty Name="WithDraws" Relationship="Self.FK_WithDraw_Suppliers" FromRole="Suppliers" ToRole="WithDraw" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="WareHouse">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Address" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Supervisor" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="WareHouseItems" Relationship="Self.FK_WareHouseItems_WareHouse" FromRole="WareHouse" ToRole="WareHouseItems" />
+    <NavigationProperty Name="WareHouseSuppliers" Relationship="Self.FK_WareHouseSupplier_WareHouse" FromRole="WareHouse" ToRole="WareHouseSupplier" />
+    <NavigationProperty Name="WithDraws" Relationship="Self.FK_WithDraw_WareHouse" FromRole="WareHouse" ToRole="WithDraw" />
+  </EntityType>
+  <EntityType Name="WareHouseItem">
+    <Key>
+      <PropertyRef Name="IdWareHouse" />
+      <PropertyRef Name="IdItem" />
+    </Key>
+    <Property Name="IdWareHouse" Type="Int32" Nullable="false" />
+    <Property Name="IdItem" Type="Int32" Nullable="false" />
+    <Property Name="Quantity" Type="Int32" />
+    <NavigationProperty Name="Item" Relationship="Self.FK_WareHouseItems_Items" FromRole="WareHouseItems" ToRole="Items" />
+    <NavigationProperty Name="WareHouse" Relationship="Self.FK_WareHouseItems_WareHouse" FromRole="WareHouseItems" ToRole="WareHouse" />
+  </EntityType>
+  <EntityType Name="WareHouseSupplier">
+    <Key>
+      <PropertyRef Name="IdWareHouse" />
+      <PropertyRef Name="IdSupplier" />
+      <PropertyRef Name="IdItem" />
+    </Key>
+    <Property Name="IdWareHouse" Type="Int32" Nullable="false" />
+    <Property Name="IdSupplier" Type="Int32" Nullable="false" />
+    <Property Name="Quantity" Type="Int32" />
+    <Property Name="LicenseDate" Type="DateTime" Precision="0" />
+    <Property Name="LicenseNum" Type="Int32" />
+    <Property Name="IdItem" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Supplier" Relationship="Self.FK_WareHouseSupplier_Suppliers" FromRole="WareHouseSupplier" ToRole="Suppliers" />
+    <NavigationProperty Name="WareHouse" Relationship="Self.FK_WareHouseSupplier_WareHouse" FromRole="WareHouseSupplier" ToRole="WareHouse" />
+  </EntityType>
+  <EntityType Name="WithDraw">
+    <Key>
+      <PropertyRef Name="IdCustomer" />
+      <PropertyRef Name="IdWareHouse" />
+      <PropertyRef Name="IdSupplier" />
+      <PropertyRef Name="IdItem" />
+    </Key>
+    <Property Name="IdCustomer" Type="Int32" Nullable="false" />
+    <Property Name="IdWareHouse" Type="Int32" Nullable="false" />
+    <Property Name="IdSupplier" Type="Int32" Nullable="false" />
+    <Property Name="LicenseNum" Type="Int32" />
+    <Property Name="Quantity" Type="Int32" />
+    <Property Name="LicenseData" Type="DateTime" Precision="0" />
+    <Property Name="IdItem" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Customer" Relationship="Self.FK_WithDraw_Customers" FromRole="WithDraw" ToRole="Customers" />
+    <NavigationProperty Name="Supplier" Relationship="Self.FK_WithDraw_Suppliers" FromRole="WithDraw" ToRole="Suppliers" />
+    <NavigationProperty Name="WareHouse" Relationship="Self.FK_WithDraw_WareHouse" FromRole="WithDraw" ToRole="WareHouse" />
+  </EntityType>
+  <Association Name="FK_WithDraw_Customers">
+    <End Role="Customers" Type="Self.Customer" Multiplicity="1" />
+    <End Role="WithDraw" Type="Self.WithDraw" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customers">
+        <PropertyRef Name="IdCustomers" />
+      </Principal>
+      <Dependent Role="WithDraw">
+        <PropertyRef Name="IdCustomer" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_WareHouseItems_Items">
+    <End Role="Items" Type="Self.Item" Multiplicity="1" />
+    <End Role="WareHouseItems" Type="Self.WareHouseItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Items">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="WareHouseItems">
+        <PropertyRef Name="IdItem" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_WareHouseSupplier_Suppliers">
+    <End Role="Suppliers" Type="Self.Supplier" Multiplicity="1" />
+    <End Role="WareHouseSupplier" Type="Self.WareHouseSupplier" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Suppliers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="WareHouseSupplier">
+        <PropertyRef Name="IdSupplier" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_WithDraw_Suppliers">
+    <End Role="Suppliers" Type="Self.Supplier" Multiplicity="1" />
+    <End Role="WithDraw" Type="Self.WithDraw" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Suppliers">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="WithDraw">
+        <PropertyRef Name="IdSupplier" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_WareHouseItems_WareHouse">
+    <End Role="WareHouse" Type="Self.WareHouse" Multiplicity="1" />
+    <End Role="WareHouseItems" Type="Self.WareHouseItem" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="WareHouse">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="WareHouseItems">
+        <PropertyRef Name="IdWareHouse" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_WareHouseSupplier_WareHouse">
+    <End Role="WareHouse" Type="Self.WareHouse" Multiplicity="1" />
+    <End Role="WareHouseSupplier" Type="Self.WareHouseSupplier" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="WareHouse">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="WareHouseSupplier">
+        <PropertyRef Name="IdWareHouse" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_WithDraw_WareHouse">
+    <End Role="WareHouse" Type="Self.WareHouse" Multiplicity="1" />
+    <End Role="WithDraw" Type="Self.WithDraw" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="WareHouse">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="WithDraw">
+        <PropertyRef Name="IdWareHouse" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="CompanyEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Customers" EntityType="Self.Customer" />
+    <EntitySet Name="Items" EntityType="Self.Item" />
+    <EntitySet Name="Suppliers" EntityType="Self.Supplier" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+    <EntitySet Name="WareHouses" EntityType="Self.WareHouse" />
+    <EntitySet Name="WareHouseItems" EntityType="Self.WareHouseItem" />
+    <EntitySet Name="WareHouseSuppliers" EntityType="Self.WareHouseSupplier" />
+    <EntitySet Name="WithDraws" EntityType="Self.WithDraw" />
+    <AssociationSet Name="FK_WithDraw_Customers" Association="Self.FK_WithDraw_Customers">
+      <End Role="Customers" EntitySet="Customers" />
+      <End Role="WithDraw" EntitySet="WithDraws" />
+    </AssociationSet>
+    <AssociationSet Name="FK_WareHouseItems_Items" Association="Self.FK_WareHouseItems_Items">
+      <End Role="Items" EntitySet="Items" />
+      <End Role="WareHouseItems" EntitySet="WareHouseItems" />
+    </AssociationSet>
+    <AssociationSet Name="FK_WareHouseSupplier_Suppliers" Association="Self.FK_WareHouseSupplier_Suppliers">
+      <End Role="Suppliers" EntitySet="Suppliers" />
+      <End Role="WareHouseSupplier" EntitySet="WareHouseSuppliers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_WithDraw_Suppliers" Association="Self.FK_WithDraw_Suppliers">
+      <End Role="Suppliers" EntitySet="Suppliers" />
+      <End Role="WithDraw" EntitySet="WithDraws" />
+    </AssociationSet>
+    <AssociationSet Name="FK_WareHouseItems_WareHouse" Association="Self.FK_WareHouseItems_WareHouse">
+      <End Role="WareHouse" EntitySet="WareHouses" />
+      <End Role="WareHouseItems" EntitySet="WareHouseItems" />
+    </AssociationSet>
+    <AssociationSet Name="FK_WareHouseSupplier_WareHouse" Association="Self.FK_WareHouseSupplier_WareHouse">
+      <End Role="WareHouse" EntitySet="WareHouses" />
+      <End Role="WareHouseSupplier" EntitySet="WareHouseSuppliers" />
+    </AssociationSet>
+    <AssociationSet Name="FK_WithDraw_WareHouse" Association="Self.FK_WithDraw_WareHouse">
+      <End Role="WareHouse" EntitySet="WareHouses" />
+      <End Role="WithDraw" EntitySet="WithDraws" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
